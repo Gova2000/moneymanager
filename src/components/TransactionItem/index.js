@@ -7,7 +7,7 @@ const Card = props => {
   const {amount, title, type, id} = profile
 
   const Del = () => {
-    click(id, amount)
+    click(id, amount, type)
   }
 
   return (
@@ -18,7 +18,7 @@ const Card = props => {
         <p className="cell1">Rs {amount}</p>
 
         <p className="cell1">{type}</p>
-        <button className="bt" type="button" onClick={Del}>
+        <button className="bt" data-testid="delete" type="button" onClick={Del}>
           <img
             src="https://assets.ccbp.in/frontend/react-js/money-manager/delete.png "
             alt="delete"
