@@ -12,8 +12,10 @@ const MoneyDet = props => {
           alt="balance"
         />
         <div className="col">
-          <p className="p1">Your Balance</p>
-          <p data-testid="balanceAmount">Rs {bln}</p>
+          <p className="p">Your Balance</p>
+          <p data-testid="balanceAmount" className="p1">
+            Rs {bln}
+          </p>
         </div>
       </div>
       <div className="money inc">
@@ -22,8 +24,10 @@ const MoneyDet = props => {
           alt="income"
         />
         <div className="col">
-          <p className="p1">Your Income</p>
-          <p data-testid="incomeAmount">Rs {inc}</p>
+          <p className="p">Your Income</p>
+          <p data-testid="incomeAmount" className="p1">
+            Rs {inc}
+          </p>
         </div>
       </div>
       <div className="money exp">
@@ -32,8 +36,10 @@ const MoneyDet = props => {
           alt="expenses"
         />
         <div className="col">
-          <p className="p1">Your Expenses</p>
-          <p data-testid="expensesAmount">Rs {exp}</p>
+          <p className="p">Your Expenses</p>
+          <p data-testid="expensesAmount" className="p1">
+            Rs {exp}
+          </p>
         </div>
       </div>
     </div>
