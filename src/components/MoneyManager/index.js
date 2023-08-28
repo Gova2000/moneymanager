@@ -54,12 +54,20 @@ class MoneyManager extends Component {
     }
 
     if (type === 'Income') {
-      this.setState(prev => ({income: prev.income + amount}))
-      this.setState(prev => ({balance: prev.balance + amount}))
+      this.setState(prev => ({
+        income: prev.income + parseInt(amount),
+      }))
+      this.setState(prev => ({
+        balance: prev.balance + parseInt(amount),
+      }))
     } else {
-      this.setState(prev => ({expenses: prev.expenses + amount}))
+      this.setState(prev => ({
+        expenses: prev.expenses + parseInt(amount),
+      }))
 
-      this.setState(prev => ({balance: prev.balance - amount}))
+      this.setState(prev => ({
+        balance: prev.balance - parseInt(amount),
+      }))
     }
 
     this.setState(prev => ({
@@ -77,12 +85,29 @@ class MoneyManager extends Component {
     this.setState({amount: event.target.value})
   }
 
-  del = (id, amount) => {
-    const {list} = this.state
+  del = (id, amount, type) => {
+    const {list, income, balance, expenses} = this.state
     const filt = list.filter(each => each.id !== id)
+    if (type === 'Expenses') {
+      this.setState(prev => ({
+        balance: prev.balance + parseInt(amount),
+      }))
+    }
 
-    this.setState(prev => ({balance: prev.balance + amount}))
-    this.setState(prev => ({expenses: prev.expenses - amount}))
+    if (type === 'Income' && income > 0 && balance > 0) {
+      this.setState(prev => ({
+        income: prev.income - parseInt(amount),
+      }))
+      this.setState(prev => ({
+        balance: prev.balance - parseInt(amount),
+      }))
+    } else if (expenses < 0) {
+      this.setState({expenses: 0})
+    } else {
+      this.setState(prev => ({
+        expenses: prev.expenses - parseInt(amount),
+      }))
+    }
 
     this.setState({list: filt})
   }
@@ -102,33 +127,31 @@ class MoneyManager extends Component {
         <MoneyDet inc={income} exp={expenses} bln={balance} />
 
         <div className="forms">
-          <form onSubmit={this.add}>
-            <div className="formdiv">
-              <h1 className="h1">Add Transaction</h1>
-              <label htmlFor="title">TITLE</label>
-              <input
-                id="title"
-                value={title}
-                placeholder="TITLE"
-                onChange={this.title}
-              />
-              <label htmlFor="amount">AMOUNT</label>
-              <input
-                value={amount}
-                id="amount"
-                placeholder="AMOUNT"
-                onChange={this.amount}
-              />
-              <label htmlFor="type">TYPE</label>
-              <select id="type" onChange={this.change}>
-                {transactionTypeOptions.map(each => (
-                  <option key={each.optionId} value={each.displayText}>
-                    {each.displayText}
-                  </option>
-                ))}
-              </select>
-              <button type="submit">Add</button>
-            </div>
+          <form onSubmit={this.add} className="formdiv">
+            <h1 className="h1">Add Transaction</h1>
+            <label htmlFor="title">TITLE</label>
+            <input
+              id="title"
+              value={title}
+              placeholder="TITLE"
+              onChange={this.title}
+            />
+            <label htmlFor="amount">AMOUNT</label>
+            <input
+              value={amount}
+              id="amount"
+              placeholder="AMOUNT"
+              onChange={this.amount}
+            />
+            <label htmlFor="type">TYPE</label>
+            <select id="type" onChange={this.change}>
+              {transactionTypeOptions.map(each => (
+                <option key={each.optionId} value={each.displayText}>
+                  {each.displayText}
+                </option>
+              ))}
+            </select>
+            <button type="submit">Add</button>
           </form>
 
           <ul className="unorder">
