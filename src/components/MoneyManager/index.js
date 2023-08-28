@@ -26,7 +26,7 @@ class MoneyManager extends Component {
     income: 0,
     expenses: 0,
     balance: 0,
-    amount: 0,
+    amount: '',
     title: '',
     list: [],
     type: '',
