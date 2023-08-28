@@ -1,0 +1,46 @@
+/* Write your CSS here */
+.mai {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+.money {
+  border-radius: 10px;
+  padding: 10px;
+  width: 220px;
+  height: 100px;
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-family: roboto;
+}
+img {
+  height: 60px;
+  width: 60px;
+}
+.bln {
+  background-color: #ecfccb;
+  background-size: cover;
+}
+.inc {
+  background-color: #cffafe;
+  background-size: cover;
+}
+.exp {
+  background-color: #ede9fe;
+  background-size: cover;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+}
+p {
+  font-size: medium;
+}
+.p1 {
+  font-size: larger;
+}
