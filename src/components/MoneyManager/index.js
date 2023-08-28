@@ -26,7 +26,7 @@ class MoneyManager extends Component {
     income: 0,
     expenses: 0,
     balance: 0,
-    amount: 0,
+    amount: '',
     title: '',
     list: [],
     type: '',
@@ -54,12 +54,20 @@ class MoneyManager extends Component {
     }
 
     if (type === 'Income') {
-      this.setState(prev => ({income: prev.income + amount}))
-      this.setState(prev => ({balance: prev.balance + amount}))
+      this.setState(prev => ({
+        income: prev.income + parseInt(amount),
+      }))
+      this.setState(prev => ({
+        balance: prev.balance + parseInt(amount),
+      }))
     } else {
-      this.setState(prev => ({expenses: prev.expenses + amount}))
+      this.setState(prev => ({
+        expenses: prev.expenses + parseInt(amount),
+      }))
 
-      this.setState(prev => ({balance: prev.balance - amount}))
+      this.setState(prev => ({
+        balance: prev.balance - parseInt(amount),
+      }))
     }
 
     this.setState(prev => ({
@@ -77,12 +85,29 @@ class MoneyManager extends Component {
     this.setState({amount: event.target.value})
   }
 
-  del = (id, amount) => {
-    const {list} = this.state
+  del = (id, amount, type) => {
+    const {list, income, balance, expenses} = this.state
     const filt = list.filter(each => each.id !== id)
+    if (type === 'Expenses') {
+      this.setState(prev => ({
+        balance: prev.balance + parseInt(amount),
+      }))
+    }
 
-    this.setState(prev => ({balance: prev.balance + amount}))
-    this.setState(prev => ({expenses: prev.expenses - amount}))
+    if (type === 'Income' && income > 0 && balance > 0) {
+      this.setState(prev => ({
+        income: prev.income - parseInt(amount),
+      }))
+      this.setState(prev => ({
+        balance: prev.balance - parseInt(amount),
+      }))
+    } else if (expenses < 0) {
+      this.setState({expenses: 0})
+    } else {
+      this.setState(prev => ({
+        expenses: prev.expenses - parseInt(amount),
+      }))
+    }
 
     this.setState({list: filt})
   }
