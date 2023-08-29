@@ -29,7 +29,7 @@ class MoneyManager extends Component {
     amount: '',
     title: '',
     list: [],
-    type: '',
+    type: 'Income',
   }
 
   change = event => {
