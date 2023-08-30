@@ -139,6 +139,7 @@ class MoneyManager extends Component {
             />
             <label htmlFor="amount">AMOUNT</label>
             <input
+              type='text'
               value={amount}
               id="amount"
               placeholder="AMOUNT"
