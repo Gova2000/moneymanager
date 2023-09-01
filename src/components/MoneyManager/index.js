@@ -29,7 +29,7 @@ class MoneyManager extends Component {
     amount: '',
     title: '',
     list: [],
-    type: 'Income',
+    type: transactionTypeOptions[0].optionId,
   }
 
   change = event => {
@@ -53,7 +53,7 @@ class MoneyManager extends Component {
       amount,
     }
 
-    if (type === 'Income') {
+    if (type === 'INCOME') {
       this.setState(prev => ({
         income: prev.income + parseInt(amount),
       }))
@@ -74,6 +74,7 @@ class MoneyManager extends Component {
       list: [...prev.list, newdet],
       title: '',
       amount: '',
+      type: transactionTypeOptions[0].optionId,
     }))
   }
 
@@ -87,25 +88,39 @@ class MoneyManager extends Component {
 
   del = (id, amount, type) => {
     const {list, income, balance, expenses} = this.state
-    const filt = list.filter(each => each.id !== id)
-    if (type === 'Expenses') {
-      this.setState(prev => ({
-        balance: prev.balance + parseInt(amount),
-      }))
-    }
 
-    if (type === 'Income' && income > 0 && balance > 0) {
-      this.setState(prev => ({
-        income: prev.income - parseInt(amount),
-      }))
+    const filt = list.filter(each => each.id !== id)
+
+    if (type === 'INCOME') {
       this.setState(prev => ({
         balance: prev.balance - parseInt(amount),
       }))
-    } else if (expenses < 0) {
-      this.setState({expenses: 0})
+      this.setState(prev => ({
+        income: prev.income - parseInt(amount),
+      }))
     } else {
       this.setState(prev => ({
+        balance: prev.balance - parseInt(amount),
+      }))
+      this.setState(prev => ({
         expenses: prev.expenses - parseInt(amount),
+      }))
+    }
+
+    if (type === 'EXPENSES' && income > 0 && balance > 0) {
+      this.setState(prev => ({
+        expenses: prev.expenses - parseInt(amount),
+      }))
+      this.setState(prev => ({
+        balance: prev.balance + parseInt(amount),
+      }))
+    } else if (expenses < 0 || expenses === 0) {
+      this.setState({expenses: 0})
+      this.setState({balance: 0})
+    }
+    if (type === 'EXPENSES' && balance < 0) {
+      this.setState(prev => ({
+        balance: prev.balance + parseInt(amount),
       }))
     }
 
@@ -131,7 +146,7 @@ class MoneyManager extends Component {
             <h1 className="h1">Add Transaction</h1>
             <label htmlFor="title">TITLE</label>
             <input
-              type='text'
+              type="text"
               id="title"
               value={title}
               placeholder="TITLE"
@@ -139,16 +154,16 @@ class MoneyManager extends Component {
             />
             <label htmlFor="amount">AMOUNT</label>
             <input
-              type='text'
+              type="text"
               value={amount}
               id="amount"
               placeholder="AMOUNT"
               onChange={this.amount}
             />
             <label htmlFor="type">TYPE</label>
-            <select id="type" onChange={this.change}>
+            <select value={type} id="type" onChange={this.change}>
               {transactionTypeOptions.map(each => (
-                <option key={each.optionId} value={each.displayText}>
+                <option key={each.optionId} value={each.optionId}>
                   {each.displayText}
                 </option>
               ))}
