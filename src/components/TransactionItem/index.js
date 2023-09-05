@@ -20,7 +20,7 @@ const Card = props => {
         <p className="cell1">{type}</p>
         <button className="bt" data-testid="delete" type="button" onClick={Del}>
           <img
-            src="https://assets.ccbp.in/frontend/react-js/money-manager/delete.png "
+            src="https://assets.ccbp.in/frontend/react-js/money-manager/delete.png"
             alt="delete"
             className="im"
           />
