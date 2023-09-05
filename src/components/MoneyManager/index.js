@@ -190,3 +190,4 @@ class MoneyManager extends Component {
 }
 
 export default MoneyManager
+
